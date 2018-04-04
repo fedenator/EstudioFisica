@@ -1,6 +1,7 @@
 package org.fpalacios.engine;
 
 import javax.swing.JPanel;
+import javax.swing.JFrame;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,7 +17,7 @@ public class EnginePanel extends JPanel {
 
 	public BufferedImage image;
 
-    public EnginePanel() {
+    public EnginePanel(JFrame frame) {
         setPreferredSize( new Dimension(1200, 768) );
 
 		engine = Engine.getInstance();
@@ -25,7 +26,7 @@ public class EnginePanel extends JPanel {
 			this.paintImmediately(0, 0, getWidth(), getHeight());
 		});
 
-		this.addKeyListener(engine);
+        frame.addKeyListener(engine);
     }
 
     protected void paintComponent(Graphics g) {

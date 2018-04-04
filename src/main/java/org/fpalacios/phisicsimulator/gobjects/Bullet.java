@@ -8,7 +8,7 @@ import java.awt.Shape;
 import org.fpalacios.engine.Engine.Key;
 import org.fpalacios.engine.gobjects.GameObject;
 import org.fpalacios.engine.gobjects.GraphicsObject;
-import org.fpalacios.engine.gobjects.PhisicsObject;
+// import org.fpalacios.engine.gobjects.PhisicsObject;
 
 public class Bullet implements GraphicsObject, GameObject/*, PhisicsObject*/ {
 

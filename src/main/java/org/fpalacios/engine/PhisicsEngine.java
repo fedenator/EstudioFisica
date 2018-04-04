@@ -12,15 +12,14 @@ import org.fpalacios.engine.gobjects.PhisicsObject;
 import org.fpalacios.flibs.util.FlinkedList;
 import org.fpalacios.flibs.util.Vector;
 
-import java.math.RoundingMode;
 import java.math.MathContext;
 
 public class PhisicsEngine {
 
-	public static final BigDecimal G          = new BigDecimal(6.674).multiply( BigDecimal.TEN.pow(-11, MathContext.DECIMAL32) );
-	public static final BigDecimal EARTH_MASS = new BigDecimal(5.9722).multiply( BigDecimal.TEN.pow(24, MathContext.DECIMAL32) );
+	public static final BigDecimal G          = BigDecimal.valueOf(6.674).multiply( BigDecimal.TEN.pow(-11, MathContext.DECIMAL32) );
+	public static final BigDecimal EARTH_MASS = BigDecimal.valueOf(5.9722).multiply( BigDecimal.TEN.pow(24, MathContext.DECIMAL32) );
 
-	public static final Vector EARTH_GRAVITY = new Vector(BigDecimal.ZERO, new BigDecimal(98) );
+	public static final Vector EARTH_GRAVITY = new Vector(BigDecimal.ZERO, BigDecimal.valueOf(98) );
 
 	private FlinkedList<PhisicsObject> pobjects = new FlinkedList<>();
 
@@ -100,7 +99,6 @@ public class PhisicsEngine {
 	        x1 = A.divide(x0, SCALE, BigDecimal.ROUND_HALF_UP);
 	        x1 = x1.add(x0);
 	        x1 = x1.divide(TWO, SCALE, BigDecimal.ROUND_HALF_UP);
-
 	    }
 	    return x1;
 	}

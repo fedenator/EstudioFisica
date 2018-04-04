@@ -16,10 +16,10 @@ public class Window extends JFrame {
 
 		Container root = getContentPane();
 		root.setLayout( new BorderLayout() );
-		root.add(new EnginePanel(), BorderLayout.CENTER);
+		root.add(new EnginePanel(this), BorderLayout.CENTER);
 
         pack();
-        
+
         setVisible(true);
     }
 

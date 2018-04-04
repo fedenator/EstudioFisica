@@ -28,6 +28,7 @@ public class Player extends Tank {
 	}
 
 	public void pollinput(Key e) {
+		System.out.println(e);
 		char key = e.keyCode;
 		if      (key == 'w') upPressed    = e.pressed;
 		else if (key == 's') downPressed  = e.pressed;
@@ -42,13 +43,12 @@ public class Player extends Tank {
 
 	public void update(int delta) {
 		super.update(delta);
-		System.out.println("X: "+x+"||Y: "+y);
 		double dist = VEL * delta;
 		Vector vector = new Vector();
-		if (rightPressed) vector.x = new BigDecimal(dist);
-		if (leftPressed)  vector.x = new BigDecimal(-dist);
-		if (upPressed)    vector.y = new BigDecimal(-dist);
-		if (downPressed)  vector.y = new BigDecimal(dist);
+		if (rightPressed) vector.x = BigDecimal.valueOf(dist);
+		if (leftPressed)  vector.x = BigDecimal.valueOf(-dist);
+		if (upPressed)    vector.y = BigDecimal.valueOf(-dist);
+		if (downPressed)  vector.y = BigDecimal.valueOf(dist);
 		applyForce(vector);
 
 		if (fireUpPressed)    simpleShot.fire(Direction.UP);
