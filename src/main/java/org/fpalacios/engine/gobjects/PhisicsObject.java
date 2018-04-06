@@ -8,9 +8,11 @@ import org.fpalacios.flibs.util.Vector;
 
 
 public interface PhisicsObject {
-	public Shape getShape();
-	public void applyForce(Vector v);
-	public BigDecimal getMass();
+	public Shape        getShape();
+	public void         applyForce(Vector v);
+	public BigDecimal   getMass();
+	public void         setVel(Vector v);
+	public Vector       getVel();
 	public BigDecimal[] getCenterOfMass();
-	public void onCollide(PhisicsObject obj);
+	public void         onCollide(PhisicsObject obj);
 }

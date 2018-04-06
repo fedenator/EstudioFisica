@@ -11,7 +11,7 @@ import org.fpalacios.engine.gobjects.GraphicsObject;
 import org.fpalacios.engine.gobjects.PhisicsObject;
 import org.fpalacios.flibs.util.Vector;
 
-public class Wall implements GraphicsObject, PhisicsObject {
+public class Wall implements GraphicsObject/*, PhisicsObject*/ {
 
 	public Rectangle rect;
 
@@ -45,7 +45,6 @@ public class Wall implements GraphicsObject, PhisicsObject {
 		return res;
 	}
 
-	@Override
 	public void onCollide(PhisicsObject obj) {
 
 	}

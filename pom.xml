@@ -13,7 +13,7 @@
         <java.version>1.8</java.version>
 
         <!-- Si el main es de kotlin poner Kt al final del nombre de la clase -->
-        <mainclass>org.fpalacios.phisicsimulator.Application</mainclass>
+        <mainclass>org.fpalacios.Application</mainclass>
     </properties>
 
     <dependencies>

@@ -54,7 +54,7 @@ public final class Engine implements Runnable, KeyListener {
 		this.width = resW;
 		this.height = resH;
 		graphicsEngine = new GraphicsEngine(resW, resH, paintFuction);
-		phisicsEngine  = new PhisicsEngine();
+		phisicsEngine  = PhisicsEngine.getInstance();
 	}
 
 	public void start() {

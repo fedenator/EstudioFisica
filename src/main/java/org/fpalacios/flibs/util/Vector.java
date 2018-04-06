@@ -1,6 +1,7 @@
 package org.fpalacios.flibs.util;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class Vector {
 	public BigDecimal x = BigDecimal.ZERO, y = BigDecimal.ZERO;
@@ -17,8 +18,8 @@ public class Vector {
 	}
 
 	public void scal(BigDecimal scalar) {
-		x = x.multiply(scalar);
-		y = y.multiply(scalar);
+		x = x.multiply(scalar, MathContext.DECIMAL32);
+		y = y.multiply(scalar, MathContext.DECIMAL32);
 	}
 
 	public Vector clone() {

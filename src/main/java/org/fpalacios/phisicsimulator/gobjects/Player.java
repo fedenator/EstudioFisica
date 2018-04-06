@@ -28,7 +28,6 @@ public class Player extends Tank {
 	}
 
 	public void pollinput(Key e) {
-		System.out.println(e);
 		char key = e.keyCode;
 		if      (key == 'w') upPressed    = e.pressed;
 		else if (key == 's') downPressed  = e.pressed;
