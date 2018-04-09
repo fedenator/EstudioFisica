@@ -9,14 +9,16 @@ import java.math.BigDecimal;
 import org.fpalacios.engine.Engine;
 import org.fpalacios.engine.abilities.Ability;
 
-public abstract class Mob extends SimpleObject {
+import org.fpalacios.flibs.util.Vector;
+
+public abstract class Mob extends RealObject {
 
 	protected final static Engine ENGINE = Engine.getInstance();
 
 	private ArrayList<Ability> abilities = new ArrayList<>();
 
-	public Mob(BigDecimal x, BigDecimal y, int[][] vertices, BigDecimal mass, Color color, int layer) {
-		super(x, y, vertices, mass, color, layer);
+	public Mob(BigDecimal mass, Color color, int layer, Vector... vertices) {
+		super(mass, color, layer, vertices);
 	}
 
 	public void addAbilitie(Ability ability) {

@@ -1,10 +1,10 @@
+
 package org.fpalacios.engine.gobjects;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.Color;
+import java.awt.Polygon;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -12,26 +12,23 @@ import java.math.MathContext;
 import org.fpalacios.engine.Engine.Key;
 
 import org.fpalacios.flibs.util.Vector;
+import org.fpalacios.flibs.geo.BigPolygon;
 
-public class SimpleObject implements GameObject, PhisicsObject, GraphicsObject {
+public class RealObject implements GameObject, PhisicsObject, GraphicsObject {
 
     /*------------------------------ Propiedades -----------------------------*/
     protected BigDecimal mass;
-    protected Polygon    shape;
+    protected BigPolygon shape;
     protected Color      color;
     protected int        layer;
     protected Vector     vel = new Vector(BigDecimal.ZERO, BigDecimal.ZERO);
 
     /*---------------------------- Constructores -----------------------------*/
-    public SimpleObject(BigDecimal x, BigDecimal y, int vertices[][], BigDecimal mass, Color color, int layer) {
+    public RealObject(BigDecimal mass, Color color, int layer, Vector... vertices) {
         this.color = color;
         this.mass  = mass;
 
-        shape = new Polygon();
-		for (int point[] : vertices)
-			shape.addPoint(point[0], point[1]);
-
-        shape.translate( x.intValue(), y.intValue() );
+        shape = new BigPolygon(vertices);
     }
 
     /*----------------------------- Funciones --------------------------------*/
@@ -50,7 +47,10 @@ public class SimpleObject implements GameObject, PhisicsObject, GraphicsObject {
 
     public void render(Graphics g) {
         g.setColor(color);
-        ((Graphics2D) g).fillPolygon(shape);
+        Polygon p = new Polygon();
+        for (Vector vertex : shape)
+            p.addPoint(vertex.x.intValue(), vertex.y.intValue());
+        ((Graphics2D) g).fillPolygon(p);
     }
 
     public void update(int delta) {}
@@ -60,16 +60,22 @@ public class SimpleObject implements GameObject, PhisicsObject, GraphicsObject {
 		BigDecimal x = vel.x.multiply (bigDelta, MathContext.DECIMAL32);
 		BigDecimal y = vel.y.multiply (bigDelta, MathContext.DECIMAL32);
 
-		shape.translate( x.intValue(), y.intValue() );
+		shape.translate( new Vector(x, y) );
 	}
 
-    public void onCollide(PhisicsObject obj) {}
-    public void pollinput(Key e) {}
+    public String toString() {
+        return "X:"+shape.vertices[0].x+"||Y:"+shape.vertices[0].y;
+    }
 
+    public void onCollide(PhisicsObject obj) {
+        System.out.println("Collide [" +getClass().getSimpleName() + " || "+ obj.getClass().getSimpleName() + "]" );
+    }
+    public void pollinput(Key e) {}
 
     /*--------------------------- Getters y Setters --------------------------*/
     public BigDecimal[] getCenterOfMass() {
-        BigDecimal res[] = { BigDecimal.valueOf(shape.xpoints[0]), BigDecimal.valueOf(shape.ypoints[0]) };
+        for (Vector vertex : shape) System.out.println(vertex);
+        BigDecimal res[] = { shape.vertices[0].x, shape.vertices[0].y };
 		return res;
     }
 
@@ -96,8 +102,12 @@ public class SimpleObject implements GameObject, PhisicsObject, GraphicsObject {
         return mass;
     }
 
-    public Shape getShape() {
+    public BigPolygon getShape() {
         return shape;
+    }
+
+    public boolean isGravitational() {
+        return true;
     }
 
 }

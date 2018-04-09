@@ -8,6 +8,8 @@ import org.fpalacios.phisicsimulator.abilities.SimpleShoot;
 import org.fpalacios.engine.gobjects.Mob;
 import org.fpalacios.engine.gobjects.PhisicsObject;
 
+import org.fpalacios.flibs.util.Vector;
+
 public class Tank extends Mob {
 
 	protected SimpleShoot simpleShot;
@@ -16,16 +18,21 @@ public class Tank extends Mob {
 	long timer;
 	boolean done = false;
 
-	private static final int vertices[][] = {
-			{  0,  0 },
-			{ 10,  0 },
-			{ 10, 10 },
-			{  0, 10 },
+	private static final Vector[] vertices = {
+			new Vector(  0,  0 ),
+			new Vector( 10,  0 ),
+			new Vector( 10, 10 ),
+			new Vector(  0, 10 )
 		};
 
 	public Tank(BigDecimal x, BigDecimal y, Color color) {
-		super(x, y, vertices, BigDecimal.ONE, color, 1);
-
+		super(BigDecimal.ONE, color, 1, new Vector[] {
+				new Vector(  0,  0 ),
+				new Vector( 10,  0 ),
+				new Vector( 10, 10 ),
+				new Vector(  0, 10 )
+			});
+		this.shape.translate( new Vector(x, y) );
 		addAbilitie( simpleShot = new SimpleShoot(this) );
 	}
 
