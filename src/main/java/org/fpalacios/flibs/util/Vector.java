@@ -34,6 +34,10 @@ public class Vector {
 		return x.multiply(other.x, MathContext.DECIMAL32).add( y.multiply(other.y, MathContext.DECIMAL32) );
 	}
 
+	public BigDecimal module() {
+		return sqrt(x.pow(2, MathContext.DECIMAL32).add( y.pow(2, MathContext.DECIMAL32) ), 32);
+	}
+
 	public void normalize() {
 		divide( Vector.sqrt(x.pow(2).add( y.pow(2) ), 32) );
 	}

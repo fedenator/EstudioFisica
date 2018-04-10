@@ -50,8 +50,8 @@ public class PhisicsEngine {
 						//F = -G -----  u21
 						//        d^2
 						//TODO: Rearmar la formula usando normalize de Vector
-						BigDecimal deltaX = pobject1.getCenterOfMass()[0].subtract( pobject2.getCenterOfMass()[0] );
-						BigDecimal deltaY = pobject1.getCenterOfMass()[1].subtract( pobject2.getCenterOfMass()[1] );
+						BigDecimal deltaX = pobject1.getCenterOfMass().x.subtract( pobject2.getCenterOfMass().x );
+						BigDecimal deltaY = pobject1.getCenterOfMass().y.subtract( pobject2.getCenterOfMass().y );
 						BigDecimal distanceSquare = deltaX.pow(2).add( deltaY.pow(2) );
 						BigDecimal Fg = G.multiply( pobject1.getMass().multiply( pobject2.getMass(), MathContext.DECIMAL32 ).divide(distanceSquare, MathContext.DECIMAL32), MathContext.DECIMAL32 );
 						Vector v = new Vector(deltaX, deltaY);
@@ -80,16 +80,17 @@ public class PhisicsEngine {
 		private void collide(PhisicsObject A, PhisicsObject B) {
 			BigDecimal mA  = A.getMass();
 			BigDecimal mB  = B.getMass();
-			Vector     VAi = A.getVel();
-			Vector     VBi = B.getVel();
 			Vector     aux;
+
 			if (mA == null || mB == null) {
 				if (mA != null) {
-					VAi.scal( BigDecimal.valueOf(-1) );
-					A.setVel(VAi);
+					Vector VAf = A.getVel().clone();
+					VAf.scal( BigDecimal.valueOf(-1) );
+					A.setVel(VAf);
 				} else {
-					VBi.scal( BigDecimal.valueOf(-1) );
-					B.setVel(VBi);
+					Vector VBf = B.getVel().clone();
+					VBf.scal( BigDecimal.valueOf(-1) );
+					B.setVel(VBf);
 				}
 				return;
 			}
@@ -97,20 +98,35 @@ public class PhisicsEngine {
 			//        mA - mB           2mB
 			//  VAf = ------- VAi  +  ------- VBi
 			//        mA + mB         mA + mB
-			Vector VAf = VAi.clone();
-			aux = VBi.clone();
-			VAf.scal( mA.subtract(mB).divide( mA.add(mB), MathContext.DECIMAL32 ) );
-			aux.scal( mB.add(mB).divide( mA.add(mB), MathContext.DECIMAL32 ) );
-			VAf.add(aux);
+			Vector VAf = A.getVel().clone();
 
-			//          2mA           mA - mB
-			//  VBf = ------- VAi  -  ------- VBi
+			Vector relativeDistance = A.getCenterOfMass().clone();
+			relativeDistance.substract( B.getCenterOfMass() );
+
+			Vector relativeVelocity = A.getVel().clone();
+			relativeVelocity.substract( B.getVel() );
+
+			aux = relativeDistance.clone();
+			aux.scal( relativeVelocity.dotProduct(relativeDistance).divide( relativeDistance.module().pow(2, MathContext.DECIMAL32), MathContext.DECIMAL32) );
+			aux.scal( mB.add(mB).divide( mA.add(mB), MathContext.DECIMAL32 ) );
+			VAf.substract(aux);
+
+			//          2mA           mB - mA
+			//  VBf = ------- VAi  +  ------- VBi
 			//        mA + mB         mA + mB
-			Vector VBf = VAi.clone();
-			aux = VBi.clone();
-			VBf.scal( mA.add(mA).divide( mA.add(mB), MathContext.DECIMAL32 ) );
-			aux.scal( mA.subtract(mB).divide( mA.add(mB), MathContext.DECIMAL32) );
-			VBf.add(aux);
+			Vector VBf = B.getVel().clone();
+
+			relativeDistance = B.getCenterOfMass().clone();
+			relativeDistance.substract( A.getCenterOfMass() );
+
+			relativeVelocity = B.getVel().clone();
+			relativeVelocity.substract( A.getVel() );
+
+			aux = relativeDistance.clone();
+			aux.scal( relativeVelocity.dotProduct(relativeDistance).divide( relativeDistance.module().pow(2, MathContext.DECIMAL32), MathContext.DECIMAL32 ) );
+			aux.scal( mA.add(mA).divide(mA.add(mB), MathContext.DECIMAL32) );
+			VBf.substract(aux);
+
 			A.setVel(VAf);
 			B.setVel(VBf);
 		}

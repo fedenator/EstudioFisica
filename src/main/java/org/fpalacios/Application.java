@@ -23,20 +23,22 @@ public class Application {
 
         Engine engine = Engine.getInstance();
 
-        // PhisicsEngine.getInstance().add( PhisicsEngine.EARTH_GRAVITY );
+        PhisicsEngine.getInstance().add( PhisicsEngine.EARTH_GRAVITY );
 
         Tank tank  = new Tank(BigDecimal.valueOf(300), BigDecimal.valueOf(300), Color.red);
-        // Wall wall = new Wall(BigDecimal.ZERO, BigDecimal.valueOf(500), BigDecimal.valueOf(1500), BigDecimal.valueOf(10) );
-        Tank tankW = new Tank(BigDecimal.valueOf(300), BigDecimal.valueOf(500), Color.blue);
+        Wall wall = new Wall(BigDecimal.ZERO, BigDecimal.valueOf(500), BigDecimal.valueOf(1500), BigDecimal.valueOf(10) );
+        // Tank tankW = new Tank(BigDecimal.valueOf(500), BigDecimal.valueOf(500), Color.blue);
 
         engine.addObject( new Background() );
         engine.addObject(tank);
-        // engine.addObject(wall);
-        engine.addObject(tankW);
-        tankW.setMass(BigDecimal.valueOf(1000000000));
-        tankW.setVel(new Vector(BigDecimal.valueOf(100), BigDecimal.valueOf(0)));
+        engine.addObject(wall);
+        // engine.addObject(tankW);
 
-        tank.setVel( new Vector(BigDecimal.valueOf(100), BigDecimal.valueOf(100)) );
+        // tank.setMass( BigDecimal.valueOf(2) );
+
+        tank.setVel( new Vector(BigDecimal.valueOf(100), BigDecimal.valueOf(-100)) );
+        // tankW.setVel(new Vector(BigDecimal.valueOf(100), BigDecimal.valueOf(0)));
+
         engine.start();
     }
 }

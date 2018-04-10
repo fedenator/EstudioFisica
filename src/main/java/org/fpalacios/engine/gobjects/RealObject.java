@@ -73,10 +73,8 @@ public class RealObject implements GameObject, PhisicsObject, GraphicsObject {
     public void pollinput(Key e) {}
 
     /*--------------------------- Getters y Setters --------------------------*/
-    public BigDecimal[] getCenterOfMass() {
-        for (Vector vertex : shape) System.out.println(vertex);
-        BigDecimal res[] = { shape.vertices[0].x, shape.vertices[0].y };
-		return res;
+    public Vector getCenterOfMass() {
+		return shape.vertices[0];
     }
 
     public void setLayer(int layer) {
